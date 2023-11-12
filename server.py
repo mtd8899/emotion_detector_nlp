@@ -1,3 +1,11 @@
+"""
+Emotion Detection Server
+This script establishes a server using Flask, designed to conduct
+emotion detection on text provided by the user.
+Author(Learner): [Mike Denum]
+"""
+
+
 from flask import Flask, render_template, request, jsonify
 from EmotionDetection.emotion_detection import emotion_detector
 
@@ -5,10 +13,17 @@ app = Flask("Emotion Detector")
 
 @app.route('/')
 def render_index_page():
+    """
+    This function triggers the rendering of the main application page through the Flask channel.
+    """
     return render_template('index.html')
 
 @app.route('/emotionDetector')
 def emotion_detection_endpoint():
+    """"
+    Evaluate the emotions in the text provided by the user 
+    and provide the corresponding result.
+    """
     # Get the input text from the request
     text_to_analyze = request.args.get("textToAnalyze")
 
@@ -18,8 +33,8 @@ def emotion_detection_endpoint():
     dominant_emotion = emotion_predictions.get('dominant_emotion')
 
     if dominant_emotion is None:
-        return jsonify({"error": "Invalid text! Please try again."}), 400
-
+        #  if formated_response['dominant_emotion'] is None:
+        return "Invalid text! Please try again."
     # Format the response
     response = {
         "anger": emotion_predictions['anger'],
